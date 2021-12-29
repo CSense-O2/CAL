@@ -15,12 +15,6 @@ from requests import get
 
 현재버전 = '1.0.1'
 
-patchnote = """
-### ver."""+현재버전+""" 업데이트 안내 ###
-
-● 적용하기 관련 오류 수정
-"""
-
 real_path = os.getcwd()
 exe_path = real_path.replace('\\','/')
 backup_path = os.path.expanduser('~')+'/Desktop/customizing/filepath.txt'
@@ -40,6 +34,10 @@ if response.status_code == 200:
     html = response.text
     soup = BeautifulSoup(html, 'html.parser')
     version = soup.select_one('#version > h1')
+    updatelog = soup.select_one('#lastest\ version\ patchnote')
+    patchnote = """
+### ver."""+현재버전+""" 업데이트 안내 ###
+"""+updatelog.get_text()
     try:
         최신버전 = version.get_text().replace("v","")
     except AttributeError:
@@ -93,12 +91,12 @@ if '다시보지않기' not in read:
     toplevel.geometry('+%d+%d' % (x, y))
     toplevel.iconbitmap(exe_path+'/MainFolder/icon.ico')
     toplevel.wm_attributes("-topmost", 1)
-    Label(toplevel,text=patchnote).pack(padx=10,pady=5)
+    Label(toplevel,text=patchnote).pack(padx=20)
     def 다시보지않기():
         with open(exe_path+'/MainFolder/다시보지않기.txt','w',encoding='UTF-8') as file:
             file.write('다시보지않기')
         toplevel.destroy()
-    Button(toplevel,text='다시보지않기',command=다시보지않기).pack(padx=10,pady=5)
+    Button(toplevel,text='다시보지않기',command=다시보지않기).pack(pady=5)
 
 def list_chunk(lst, n):
     return [lst[i:i+n] for i in range(0, len(lst), n)] 
@@ -124,16 +122,16 @@ def load():
             file_read=file.read()
         work_list=list_chunk(file_read.split('\n'), 5)
         file_list=work_list[work_choose] 
-        slot1_filename.set(file_list[0].split(':')[1])
-        slot2_filename.set(file_list[1].split(':')[1])
-        slot3_filename.set(file_list[2].split(':')[1])
-        slot4_filename.set(file_list[3].split(':')[1])
-        slot5_filename.set(file_list[4].split(':')[1])
-        slot1_filepath.set(file_list[0].split(':')[2:])
-        slot2_filepath.set(file_list[1].split(':')[2:])
-        slot3_filepath.set(file_list[2].split(':')[2:])
-        slot4_filepath.set(file_list[3].split(':')[2:])
-        slot5_filepath.set(file_list[4].split(':')[2:])
+        slot1_filename.set(file_list[0].split(':')[1].split('|')[0])
+        slot2_filename.set(file_list[1].split(':')[1].split('|')[0])
+        slot3_filename.set(file_list[2].split(':')[1].split('|')[0])
+        slot4_filename.set(file_list[3].split(':')[1].split('|')[0])
+        slot5_filename.set(file_list[4].split(':')[1].split('|')[0])
+        slot1_filepath.set(file_list[0].split('|')[1])
+        slot2_filepath.set(file_list[1].split('|')[1])
+        slot3_filepath.set(file_list[2].split('|')[1])
+        slot4_filepath.set(file_list[3].split('|')[1])
+        slot5_filepath.set(file_list[4].split('|')[1])
 
 def apply():
     path_list=[slot1_path.cget("text"),slot2_path.cget("text"),slot3_path.cget("text"),slot4_path.cget("text"),slot5_path.cget("text")]
@@ -146,25 +144,20 @@ def apply():
         q2=msgbox.askyesno(work_name+'의 커마 파일 적용',work_name+'의 커마 파일을 적용하시겠습니까?')
         if q2==1:
             for path in path_list:
-                if path=='비어있음':
+                if path =='비어있음':
                     pass
                 elif path!='비어있음':
                     if os.path.isfile(customizing_path+'/Customizing_'+work_list[work_choose]+'_slot'+str(path_list.index(path))+'.cus'):
                         q3=msgbox.askquestion('커마 파일 확인','해당 슬롯에 커마 파일이 존재합니다.\n덮어쓰시겠습니까?')
                         if q3=='yes':
-                            try:
-                                shutil.copyfile(path,customizing_path+'/Customizing_'+work_list[work_choose]+'_slot'+str(path_list.index(path))+'.cus')
-                                msgbox.showinfo('커마 파일 적용 완료','커마 파일이 적용되었습니다.\n인게임에서 확인해주세요.')
-                            except:
-                                msgbox.showerror('커마 파일 적용 오류','파일 경로를 확인해주세요.')
+                            shutil.copyfile(str(path),customizing_path+'/Customizing_'+str(work_list[work_choose])+'_slot'+str(path_list.index(path))+'.cus')
+                            msgbox.showinfo('커마 파일 적용 완료','커마 파일이 적용되었습니다.\n인게임에서 확인해주세요.')
                         elif q3=='no':
                             msgbox.showwarning('커마 파일 중복 확인','해당 커마 파일을 백업하신 후 다시 시도해주세요.')
+                            break
                     else:
-                        try:
-                            shutil.copyfile(path,customizing_path+'/Customizing_'+work_list[work_choose]+'_slot'+str(path_list.index(path))+'.cus')
-                            msgbox.showinfo('커마 파일 적용 완료','커마 파일이 적용되었습니다.\n인게임에서 확인해주세요.')
-                        except:
-                            msgbox.showerror('커마 파일 적용 오류','파일 경로를 확인해주세요.')
+                        shutil.copyfile(str(path),customizing_path+'/Customizing_'+str(work_list[work_choose])+'_slot'+str(path_list.index(path))+'.cus')
+                        msgbox.showinfo('커마 파일 적용 완료','커마 파일이 적용되었습니다.\n인게임에서 확인해주세요.')
 
 def save():
     work_name=work_combobox.get()
