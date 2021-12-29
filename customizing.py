@@ -13,13 +13,12 @@ from string import ascii_uppercase
 from bs4 import BeautifulSoup
 from requests import get
 
-현재버전 = '1.0.0'
+현재버전 = '1.0.1'
 
 patchnote = """
 ### ver."""+현재버전+""" 업데이트 안내 ###
 
-● 홈페이지 개설
-● 커스터마이징 적용 런처 개발
+● 적용하기 관련 오류 수정
 """
 
 real_path = os.getcwd()
