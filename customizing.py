@@ -144,21 +144,21 @@ def apply():
     if work_choose<0:
         msgbox.showwarning('직업 선택 오류','직업을 선택한 후 불러오기 버튼을 눌러주세요.')
     elif work_choose>=0:
-        q1=msgbox.askyesno(work_name+'의 커마 파일 적용',work_name+'의 커마 파일을 적용하시겠습니까?')
-        if q1==1:
+        q2=msgbox.askyesno(work_name+'의 커마 파일 적용',work_name+'의 커마 파일을 적용하시겠습니까?')
+        if q2==1:
             for path in path_list:
                 if path=='비어있음':
                     pass
                 elif path!='비어있음':
                     if os.path.isfile(customizing_path+'/Customizing_'+work_list[work_choose]+'_slot'+str(path_list.index(path))+'.cus'):
-                        q2=msgbox.askquestion('커마 파일 확인','해당 슬롯에 커마 파일이 존재합니다.\n덮어쓰시겠습니까?')
-                        if q2=='yes':
+                        q3=msgbox.askquestion('커마 파일 확인','해당 슬롯에 커마 파일이 존재합니다.\n덮어쓰시겠습니까?')
+                        if q3=='yes':
                             try:
                                 shutil.copyfile(path,customizing_path+'/Customizing_'+work_list[work_choose]+'_slot'+str(path_list.index(path))+'.cus')
                                 msgbox.showinfo('커마 파일 적용 완료','커마 파일이 적용되었습니다.\n인게임에서 확인해주세요.')
                             except:
                                 msgbox.showerror('커마 파일 적용 오류','파일 경로를 확인해주세요.')
-                        if q2=='no':
+                        elif q3=='no':
                             msgbox.showwarning('커마 파일 중복 확인','해당 커마 파일을 백업하신 후 다시 시도해주세요.')
                     else:
                         try:
@@ -173,8 +173,8 @@ def save():
     if work_choose<0:
         msgbox.showwarning('직업 선택 오류','직업을 선택한 후 불러오기 버튼을 눌러주세요.')
     elif work_choose>=0:
-        q1 = msgbox.askyesno(work_name+'커마 파일 저장',work_name+'의 커마 파일을 저장하시겠습니까?')
-        if q1==1:
+        q4 = msgbox.askyesno(work_name+'커마 파일 저장',work_name+'의 커마 파일을 저장하시겠습니까?')
+        if q4==1:
             with open(exe_path+'/MainFolder/filepath.txt','r',encoding='utf-8') as file:
                 read_file = file.read()
             current_list=[work_name+'1번:'+slot1_filename.get()+':'+slot1_filepath.get(),work_name+'2번:'+slot2_filename.get()+':'+slot2_filepath.get(),work_name+'3번:'+slot3_filename.get()+':'+slot3_filepath.get(),work_name+'4번:'+slot4_filename.get()+':'+slot4_filepath.get(),work_name+'5번:'+slot5_filename.get()+':'+slot5_filepath.get()]
@@ -208,8 +208,8 @@ def find_file(num):
     if filedialog.Open():
         dir_name = file_dir.name
         file_name = file_dir.name.split('/')[-1]
-        q = msgbox.askyesno(num+'번 슬롯 파일 선택 알림',num+'번 슬롯 파일을 '+file_name+'으로 설정하시겠습니까?')
-        if q == 1:
+        q5 = msgbox.askyesno(num+'번 슬롯 파일 선택 알림',num+'번 슬롯 파일을 '+file_name+'으로 설정하시겠습니까?')
+        if q5 == 1:
             if num == '1':
                 slot1_filepath.set(dir_name)
             elif num == '2':
@@ -226,14 +226,14 @@ def find_file(num):
 
 def restore_btn():
     if os.path.isfile(backup_path):
-        q1=msgbox.askquestion('파일 경로 복원','커마 파일들의 경로를 복원하시겠습니까?')
-        if q1=='yes':
+        q6=msgbox.askquestion('파일 경로 복원','커마 파일들의 경로를 복원하시겠습니까?')
+        if q6=='yes':
             shutil.copyfile(backup_path,exe_path+'/MainFolder/filepath.txt')
 
 def backup_btn():
     if os.path.isfile(backup_path):
-        q1=msgbox.askquestion('파일 복원 확인','해당 경로에 복원파일이 이미 존재합니다.\n파일을 덮어쓰시겠습니까?')
-        if q1=='yes':
+        q7=msgbox.askquestion('파일 복원 확인','해당 경로에 복원파일이 이미 존재합니다.\n파일을 덮어쓰시겠습니까?')
+        if q7=='yes':
             shutil.copyfile(exe_path+'/MainFolder/filepath.txt',backup_path)
 
 menu = Menu(root)
