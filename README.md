@@ -4,9 +4,9 @@ Customizing Apply Launcher(이하 "CAL")는 로스트아크(이하 "로아")의 
 
 Download
 ======
-| Platform | Link | Status |
-|---|---|---|
-| Download from github | [CAL releases](https://github.com/CSense-O2/CAL/releases) | [![Github All Releases](https://img.shields.io/github/downloads/CSense-O2/CAL/latest/total?color=bright%20green&label=Downloads&logo=SBC&logoColor=Dark)](https://github.com/CSense-O2/CAL/releases)|
+| Platform | Link | Status | Version |
+|---|---|---|---|
+| Download from github | [CAL releases](https://github.com/CSense-O2/CAL/releases) | [![GitHub all releases](https://img.shields.io/github/downloads/CSense-O2/CAL/total?color=Bright%20Green&label=Downloads&logo=GIthub&style=flat-square)](https://github.com/CSense-O2/CAL/releases)| [![GitHub release (latest by date)](https://img.shields.io/github/v/release/CSense-O2/CAL?label=Latest%20Version&style=social)](https://github.com/CSense-O2/CAL/releases)|
 
 Function
 ======
