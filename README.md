@@ -6,7 +6,7 @@ Download
 ======
 | Platform | Link | Status |
 |---|---|---|
-| Download from github | [CAL releases](https://github.com/CSense-O2/CAL/releases) | [![https://github.com/CSense-O2//releases](https://img.shields.io/github/downloads/CSense-O2/CAL/latest/total?color=bright%20green&label=Downloads&logo=SBC&logoColor=Dark)](https://github.com/CSense-O2/CAL/releases)|
+| Download from github | [CAL releases](https://github.com/CSense-O2/CAL/releases) | [![Github All Releases](https://img.shields.io/github/downloads/CSense-O2/CAL/latest/total?color=bright%20green&label=Downloads&logo=SBC&logoColor=Dark)](https://github.com/CSense-O2/CAL/releases)|
 
 Function
 ======
