@@ -18,6 +18,6 @@ Connect
 ===
 Sort | Link
 :---:|:---:
-오류 | [![GitHub issues by-label](https://img.shields.io/github/issues/CSense-O2/CAL/%EC%98%A4%EB%A5%98?color=Bright%20Green&label=Error&logo=Github&style=plastic)](https://github.com/CSense-O2/CAL/labels/%EC%98%A4%EB%A5%98)
-건의 | [![GitHub issues by-label](https://img.shields.io/github/issues/CSense-O2/CAL/%EA%B1%B4%EC%9D%98?color=Bright%20Green&label=Suggestions&logo=Github&style=plastic)](https://github.com/CSense-O2/CAL/labels/%EA%B1%B4%EC%9D%98)
-질문 | [![GitHub issues by-label](https://img.shields.io/github/issues/CSense-O2/CAL/%EC%A7%88%EB%AC%B8?color=Bright%20Green&label=Questions&logo=Github&style=plastic)](https://github.com/CSense-O2/CAL/labels/%EC%A7%88%EB%AC%B8)
+오류 | [![GitHub issues by-label](https://img.shields.io/github/issues/CSense-O2/CAL/Error?color=brightgreen&logo=Github&style=plastic)](https://github.com/CSense-O2/CAL/labels/Error)
+건의 | [![GitHub issues by-label](https://img.shields.io/github/issues/CSense-O2/CAL/Suggestion?color=brightgreen&logo=Github&style=plastic)](https://github.com/CSense-O2/CAL/labels/Suggestion)
+질문 | [![GitHub issues by-label](https://img.shields.io/github/issues/CSense-O2/CAL/Question?color=brightgreen&logo=Github&style=plastic)](https://github.com/CSense-O2/CAL/labels/Question)
