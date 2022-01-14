@@ -13,7 +13,7 @@ from string import ascii_uppercase
 from bs4 import BeautifulSoup
 from requests import get
 
-현재버전 = '1.0.4'
+현재버전 = 'v1.0.4'
 real_path = os.getcwd()
 exe_path = real_path.replace('\\', '/')
 backup_path = os.path.expanduser('~')+'/Desktop/CAL_backup/filepath.txt'
@@ -28,20 +28,18 @@ url = 'https://github.com/CSense-O2/CAL/releases/latest'
 
 response = get(url)
 
-download_list = []
-
 if response.status_code == 200:
     html = response.text
     soup = BeautifulSoup(html, 'html.parser')
     try:
-        최신버전 = soup.select_one('#repo-content-pjax-container > div > div > div.Box-body > div.d-flex.flex-row.mb-3 > div.flex-1 > h1')
-        updatelog = soup.select_one('#repo-content-pjax-container > div > div > div.Box-body > div.markdown-body.my-3 > p')
+        최신버전 = soup.select_one('#repo-content-pjax-container > div > div > div.Box-body > div.d-flex.flex-row.mb-3 > div.flex-1 > h1').get_text()
+        updatelog = soup.select_one('#repo-content-pjax-container > div > div > div.Box-body > div.markdown-body.my-3 > p').get_text()
         patchnote = """
-### ver."""+현재버전+""" 업데이트 안내 ###
-"""+updatelog.get_text()
+### """+현재버전+""" 업데이트 안내 ###
+"""+updatelog
     except AttributeError:
         msgbox.showinfo('최신버전 확인 오류', '최신 버전 확인에 오류가 발생했습니다.\r홈페이지를 확인해주세요.')
-        webbrowser.open('https://github.com/CSense-O2/CAL/')
+        webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
         sys.exit(0)
     if 최신버전 > 현재버전:
         q1 = msgbox.askquestion(
@@ -55,21 +53,21 @@ if response.status_code == 200:
         pass
     else:
         msgbox.showerror('버전 확인 오류', '관리자에게 "버전 확인 오류"라고 전달해주세요.')
-        webbrowser.open('http://pf.kakao.com/_laxars/chat')
+        webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
         sys.exit(0)
 elif response.status_code == 404:
     msgbox.showinfo('현재 점검중입니다.', '현재 점검중이니 관리자에게 문의해주세요.')
-    webbrowser.open('http://pf.kakao.com/_laxars/chat')
+    webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
     sys.exit(0)
 else:
     msgbox.showerror("파싱 오류", 'response : ' +
                      response.status_code+"\n해당 오류 코드를 관리자에게 전달해 주세요.")
-    webbrowser.open('http://pf.kakao.com/_laxars/chat')
+    webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
     sys.exit(0)
 
 if customizing_path == '':
     msgbox.showinfo('로스트아크 설치 탐색 오류', '관리자에게 "로스트아크 설치 탐색 오류" 라고 전달해주세요.')
-    webbrowser.open('http://pf.kakao.com/_laxars/chat')
+    webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
 
 root = Tk()
 root.title("커스터마이징 적용기")
@@ -106,7 +104,7 @@ def list_chunk(lst, n):
 
 
 def link_btn():
-    webbrowser.open('http://pf.kakao.com/_laxars/chat')
+    webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
 
 
 def update_log():
@@ -143,40 +141,31 @@ def load():
 
 
 def apply():
-    path_list = [slot1_path.cget("text"), slot2_path.cget("text"), slot3_path.cget(
-        "text"), slot4_path.cget("text"), slot5_path.cget("text")]
+    path_list = [slot1_path.cget("text"), slot2_path.cget("text"), slot3_path.cget("text"), slot4_path.cget("text"), slot5_path.cget("text")]
     work_name = work_combobox.get()
     work_choose = worklist.index(work_name)
-    work_list = ['Warrior', 'Fighter_Male', 'Fighter',
-                 'Hunter', 'Hunter_Female', 'Magician', 'Delain']
+    work_list = ['Warrior', 'Fighter_Male', 'Fighter','Hunter', 'Hunter_Female', 'Magician', 'Delain']
     if work_choose < 0:
         msgbox.showwarning('직업 선택 오류', '직업을 선택한 후 불러오기 버튼을 눌러주세요.')
     elif work_choose >= 0:
-        q2 = msgbox.askyesno(work_name+'의 커마 파일 적용',
-                             work_name+'의 커마 파일을 적용하시겠습니까?')
+        q2 = msgbox.askyesno(work_name+'의 커마 파일 적용',work_name+'의 커마 파일을 적용하시겠습니까?')
         if q2 == 1:
             for path in path_list:
                 if path == '비어있음':
                     pass
                 elif path != '비어있음':
                     if os.path.isfile(customizing_path+'/Customizing_'+work_list[work_choose]+'_slot'+str(path_list.index(path))+'.cus'):
-                        q3 = msgbox.askquestion(
-                            '커마 파일 확인', '해당 슬롯에 커마 파일이 존재합니다.\n덮어쓰시겠습니까?')
+                        q3 = msgbox.askquestion('커마 파일 확인', '해당 슬롯에 커마 파일이 존재합니다.\n덮어쓰시겠습니까?')
                         if q3 == 'yes':
-                            shutil.copyfile(str(path), customizing_path+'/Customizing_'+str(
-                                work_list[work_choose])+'_slot'+str(path_list.index(path))+'.cus')
-                            msgbox.showinfo(
-                                '커마 파일 적용 완료', '커마 파일이 적용되었습니다.\n인게임에서 확인해주세요.')
+                            shutil.copyfile(str(path), customizing_path+'/Customizing_'+str(work_list[work_choose])+'_slot'+str(path_list.index(path))+'.cus')
+                            msgbox.showinfo('커마 파일 적용 완료', '커마 파일이 적용되었습니다.\n인게임에서 확인해주세요.')
                         elif q3 == 'no':
-                            msgbox.showwarning(
-                                '커마 파일 중복 확인', '해당 커마 파일을 백업하신 후 다시 시도해주세요.')
+                            msgbox.showwarning('커마 파일 중복 확인', '해당 커마 파일을 백업하신 후 다시 시도해주세요.')
                             break
                     else:
                         shutil.copyfile(str(path), customizing_path+'/Customizing_'+str(
                             work_list[work_choose])+'_slot'+str(path_list.index(path))+'.cus')
-                        msgbox.showinfo(
-                            '커마 파일 적용 완료', '커마 파일이 적용되었습니다.\n인게임에서 확인해주세요.')
-
+                        msgbox.showinfo('커마 파일 적용 완료', '커마 파일이 적용되었습니다.\n인게임에서 확인해주세요.')
 
 def save():
     work_name = work_combobox.get()
@@ -184,13 +173,11 @@ def save():
     if work_choose < 0:
         msgbox.showwarning('직업 선택 오류', '직업을 선택한 후 불러오기 버튼을 눌러주세요.')
     elif work_choose >= 0:
-        q4 = msgbox.askyesno(work_name+'커마 파일 저장',
-                             work_name+'의 커마 파일을 저장하시겠습니까?')
+        q4 = msgbox.askyesno(work_name+'커마 파일 저장',work_name+'의 커마 파일을 저장하시겠습니까?')
         if q4 == 1:
             with open(exe_path+'/MainFolder/filepath.txt', 'r', encoding='utf-8') as file:
                 read_file = file.read()
-            current_list = [work_name+'1번:'+slot1_filename.get()+':'+slot1_filepath.get(), work_name+'2번:'+slot2_filename.get()+':'+slot2_filepath.get(), work_name+'3번:'+slot3_filename.get(
-            )+':'+slot3_filepath.get(), work_name+'4번:'+slot4_filename.get()+':'+slot4_filepath.get(), work_name+'5번:'+slot5_filename.get()+':'+slot5_filepath.get()]
+            current_list = [work_name+'1번:'+slot1_filename.get()+':'+slot1_filepath.get(), work_name+'2번:'+slot2_filename.get()+':'+slot2_filepath.get(), work_name+'3번:'+slot3_filename.get()+':'+slot3_filepath.get(), work_name+'4번:'+slot4_filename.get()+':'+slot4_filepath.get(), work_name+'5번:'+slot5_filename.get()+':'+slot5_filepath.get()]
             read_file.split('\n')[work_choose*5:work_choose*5+5] = current_list
             if work_choose == 0:
                 write_file_list = current_list+read_file.split('\n')[5:]
@@ -213,7 +200,7 @@ def save():
                 write_file_list = read_file.split('\n')[:30]+current_list
             else:
                 msgbox.showerror('직업 선택 오류', '관리자에게 "직업 선택 오류"라고 전달해주세요.')
-                webbrowser.open('http://pf.kakao.com/_laxars/chat')
+                webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
                 sys.exit(0)
             with open(exe_path+'/MainFolder/filepath.txt', 'w', encoding='utf-8') as f:
                 f.write('\n'.join(write_file_list))
@@ -221,15 +208,13 @@ def save():
     else:
         msgbox.showerror('저장 오류', work_choose)
 
-
 def find_file(num):
     file_dir = filedialog.askopenfile(
         initialdir="/", title=num+"번 관문 BGM 파일 선택", filetypes=(("CUS files", "*.cus"), ("all files", "*.*")))
     if filedialog.Open():
         dir_name = file_dir.name
         file_name = file_dir.name.split('/')[-1]
-        q5 = msgbox.askyesno(num+'번 슬롯 파일 선택 알림', num +
-                             '번 슬롯 파일을 '+file_name+'으로 설정하시겠습니까?')
+        q5 = msgbox.askyesno(num+'번 슬롯 파일 선택 알림', num +'번 슬롯 파일을 '+file_name+'으로 설정하시겠습니까?')
         if q5 == 1:
             if num == '1':
                 slot1_filepath.set(dir_name)
@@ -243,7 +228,7 @@ def find_file(num):
                 slot5_filepath.set(dir_name)
             else:
                 msgbox.showerror('슬롯 선택 오류', '관리자에게 "슬롯 선택 오류"라고 전달해주세요.')
-                webbrowser.open('http://pf.kakao.com/_laxars/chat')
+                webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
 
 
 def restore_btn():
@@ -255,8 +240,7 @@ def restore_btn():
 
 def backup_btn():
     if os.path.isfile(backup_path):
-        q7 = msgbox.askquestion(
-            '파일 복원 확인', '해당 경로에 복원파일이 이미 존재합니다.\n파일을 덮어쓰시겠습니까?')
+        q7 = msgbox.askquestion('파일 복원 확인', '해당 경로에 복원파일이 이미 존재합니다.\n파일을 덮어쓰시겠습니까?')
         if q7 == 'yes':
             shutil.copyfile(exe_path+'/MainFolder/filepath.txt', backup_path)
 
@@ -338,5 +322,3 @@ apply_btn.grid(row=6, column=0)
 save_btn = Button(root, text='저장하기', command=save)
 save_btn.grid(row=6, column=1)
 root.mainloop()
-
-# pyinstaller --uac-admin --clean --noconsole --icon=icon.ico --add-data='.\Lostark\CAL\CAL\MainFolder*;MainFolder' .\Lostark\CAL\CAL\CAL.py
