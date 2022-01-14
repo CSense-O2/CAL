@@ -13,7 +13,7 @@ from string import ascii_uppercase
 from bs4 import BeautifulSoup
 from requests import get
 
-현재버전 = '1.0.3'
+현재버전 = '1.0.4'
 real_path = os.getcwd()
 exe_path = real_path.replace('\\', '/')
 backup_path = os.path.expanduser('~')+'/Desktop/CAL_backup/filepath.txt'
@@ -24,7 +24,7 @@ for drive in list(ascii_uppercase):
                 '\\', '/')+'/LOSTARK/EFGame/Customizing'
             break
 
-url = 'https://bit.do/customizing'
+url = 'https://github.com/CSense-O2/CAL/releases/latest'
 
 response = get(url)
 
@@ -33,16 +33,15 @@ download_list = []
 if response.status_code == 200:
     html = response.text
     soup = BeautifulSoup(html, 'html.parser')
-    version = soup.select_one('#version')
     try:
-        최신버전 = version.get_text().replace("v", "")
-        updatelog = soup.select_one('#'+version)
+        최신버전 = soup.select_one('#repo-content-pjax-container > div > div > div.Box-body > div.d-flex.flex-row.mb-3 > div.flex-1 > h1')
+        updatelog = soup.select_one('#repo-content-pjax-container > div > div > div.Box-body > div.markdown-body.my-3 > p')
         patchnote = """
 ### ver."""+현재버전+""" 업데이트 안내 ###
 """+updatelog.get_text()
     except AttributeError:
         msgbox.showinfo('최신버전 확인 오류', '최신 버전 확인에 오류가 발생했습니다.\r홈페이지를 확인해주세요.')
-        webbrowser.open('https://bit.do/customizing')
+        webbrowser.open('https://github.com/CSense-O2/CAL/')
         sys.exit(0)
     if 최신버전 > 현재버전:
         q1 = msgbox.askquestion(
@@ -50,7 +49,7 @@ if response.status_code == 200:
         if q1 == 'yes':
             shutil.copyfile(exe_path+'/MainFolder/filepath.txt', backup_path)
         msgbox.showinfo('최신 버전 발견', '최신 버전 다운로드를 위해 링크가 열립니다.')
-        webbrowser.open('https://bit.do/customizing')
+        webbrowser.open('https://github.com/CSense-O2/CAL/')
         sys.exit(0)
     elif 최신버전 <= 현재버전:
         pass
