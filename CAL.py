@@ -1,6 +1,6 @@
 # -*- Encoding:UTF-8 -*- #
 ### 코드를 무단으로 복제,개조 및 배포하지 말 것 ###
-### Copyright ⓒ 2021 CSense-O2 / 산소 my______baby@naver.com ###
+### Copyright ⓒ 2021-2022 CSense-O2 / 산소 my______baby@naver.com ###
 import os
 import sys
 import shutil
@@ -13,10 +13,11 @@ from string import ascii_uppercase
 from bs4 import BeautifulSoup
 from requests import get
 
-현재버전 = 'v1.0.4'
+현재버전 = 'v1.1.0'
+
 real_path = os.getcwd()
 exe_path = real_path.replace('\\', '/')
-backup_path = os.path.expanduser('~')+'/Desktop/CAL_backup/filepath.txt'
+backup_path = os.path.expanduser('~')+'/Desktop/CAL_backup'
 for drive in list(ascii_uppercase):
     for (path, dir, files) in os.walk(drive+':/'):
         if 'LOSTARK' in dir:
@@ -36,7 +37,8 @@ if response.status_code == 200:
         updatelog = soup.select_one('#repo-content-pjax-container > div > div > div.Box-body > div.markdown-body.my-3 > p').get_text()
         patchnote = """
 ### """+현재버전+""" 업데이트 안내 ###
-"""+updatelog
+
+"""+updatelog+'\n'
     except AttributeError:
         msgbox.showinfo('최신버전 확인 오류', '최신 버전 확인에 오류가 발생했습니다.\r홈페이지를 확인해주세요.')
         webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
@@ -45,7 +47,11 @@ if response.status_code == 200:
         q1 = msgbox.askquestion(
             '최신 버전 발견', '최신 버전 다운로드를 위해 링크가 열립니다.\n커마 경로 파일을 백업하시겠습니까?')
         if q1 == 'yes':
-            shutil.copyfile(exe_path+'/MainFolder/filepath.txt', backup_path)
+            if os.path.isdir(backup_path):
+                shutil.copytree(exe_path+'/backup',backup_path)
+            else:
+                os.mkdir(backup_path)
+                shutil.copytree(exe_path+'/backup',backup_path)
         msgbox.showinfo('최신 버전 발견', '최신 버전 다운로드를 위해 링크가 열립니다.')
         webbrowser.open('https://github.com/CSense-O2/CAL/')
         sys.exit(0)
@@ -98,33 +104,27 @@ if '다시보지않기' not in read:
         toplevel.destroy()
     Button(toplevel, text='다시보지않기', command=다시보지않기).pack(pady=5)
 
-
 def list_chunk(lst, n):
     return [lst[i:i+n] for i in range(0, len(lst), n)]
-
 
 def link_btn():
     webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
 
-
 def update_log():
     msgbox.showinfo("업데이트 내용 확인", patchnote)
-
 
 def install_btn():
     msgbox.showinfo("커마 폴더 경로", customizing_path)
 
-
 def version_btn():
-    msgbox.showinfo("현재 버전", '[ v '+현재버전+' ]')
-
+    msgbox.showinfo("현재 버전", '[ '+현재버전+' ]')
 
 def load():
     work_choose = worklist.index(work_combobox.get())
     if work_choose < 0:
         msgbox.showwarning('직업 선택 오류', '직업을 선택한 후 불러오기 버튼을 눌러주세요.')
     elif work_choose >= 0:
-        with open(exe_path+'/MainFolder/filepath.txt', 'r', encoding='utf-8') as file:
+        with open(exe_path+'/backup/filepath.txt', 'r', encoding='utf-8') as file:
             file_read = file.read()
         work_list = list_chunk(file_read.split('\n'), 5)
         file_list = work_list[work_choose]
@@ -138,7 +138,6 @@ def load():
         slot3_filepath.set(file_list[2].split('|')[1])
         slot4_filepath.set(file_list[3].split('|')[1])
         slot5_filepath.set(file_list[4].split('|')[1])
-
 
 def apply():
     path_list = [slot1_path.cget("text"), slot2_path.cget("text"), slot3_path.cget("text"), slot4_path.cget("text"), slot5_path.cget("text")]
@@ -175,9 +174,14 @@ def save():
     elif work_choose >= 0:
         q4 = msgbox.askyesno(work_name+'커마 파일 저장',work_name+'의 커마 파일을 저장하시겠습니까?')
         if q4 == 1:
-            with open(exe_path+'/MainFolder/filepath.txt', 'r', encoding='utf-8') as file:
+            shutil.copyfile(slot1_filepath,exe_path+'/backup/'+work_name+'_'+slot1_filename+'.cus')
+            shutil.copyfile(slot2_filepath,exe_path+'/backup/'+work_name+'_'+slot2_filename+'.cus')
+            shutil.copyfile(slot3_filepath,exe_path+'/backup/'+work_name+'_'+slot3_filename+'.cus')
+            shutil.copyfile(slot4_filepath,exe_path+'/backup/'+work_name+'_'+slot4_filename+'.cus')
+            shutil.copyfile(slot5_filepath,exe_path+'/backup/'+work_name+'_'+slot5_filename+'.cus')
+            with open(exe_path+'/backup/filepath.txt', 'r', encoding='utf-8') as file:
                 read_file = file.read()
-            current_list = [work_name+'1번:'+slot1_filename.get()+':'+slot1_filepath.get(), work_name+'2번:'+slot2_filename.get()+':'+slot2_filepath.get(), work_name+'3번:'+slot3_filename.get()+':'+slot3_filepath.get(), work_name+'4번:'+slot4_filename.get()+':'+slot4_filepath.get(), work_name+'5번:'+slot5_filename.get()+':'+slot5_filepath.get()]
+            current_list = [work_name+'1번:'+slot1_filename.get()+':'+exe_path+'/backup/'+work_name+'_'+slot1_filename+'.cus', work_name+'2번:'+slot2_filename.get()+':'+exe_path+'/backup/'+work_name+'_'+slot2_filename+'.cus', work_name+'3번:'+slot3_filename.get()+':'+exe_path+'/backup/'+work_name+'_'+slot3_filename+'.cus', work_name+'4번:'+slot4_filename.get()+':'+exe_path+'/backup/'+work_name+'_'+slot4_filename+'.cus', work_name+'5번:'+slot5_filename.get()+':'+exe_path+'/backup/'+work_name+'_'+slot5_filename+'.cus']
             read_file.split('\n')[work_choose*5:work_choose*5+5] = current_list
             if work_choose == 0:
                 write_file_list = current_list+read_file.split('\n')[5:]
@@ -202,7 +206,7 @@ def save():
                 msgbox.showerror('직업 선택 오류', '관리자에게 "직업 선택 오류"라고 전달해주세요.')
                 webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
                 sys.exit(0)
-            with open(exe_path+'/MainFolder/filepath.txt', 'w', encoding='utf-8') as f:
+            with open(exe_path+'/backup/filepath.txt', 'w', encoding='utf-8') as f:
                 f.write('\n'.join(write_file_list))
             msgbox.showinfo('파일 저장 완료', work_name+'의 커마 파일 저장이 완료되었습니다.')
     else:
@@ -230,20 +234,24 @@ def find_file(num):
                 msgbox.showerror('슬롯 선택 오류', '관리자에게 "슬롯 선택 오류"라고 전달해주세요.')
                 webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
 
-
 def restore_btn():
-    if os.path.isfile(backup_path):
+    if os.path.isdir(backup_path):
         q6 = msgbox.askquestion('파일 경로 복원', '커마 파일들의 경로를 복원하시겠습니까?')
         if q6 == 'yes':
-            shutil.copyfile(backup_path, exe_path+'/MainFolder/filepath.txt')
-
-
+            shutil.copytree(backup_path,exe_path+'/backup')
+    else:
+        msgbox.showerror('파일 복원 실패','백업 파일들이 존재하지 않습니다.')
+        
 def backup_btn():
-    if os.path.isfile(backup_path):
+    os.mkdir(backup_path)
+    if os.path.isfile(backup_path+'/filepath.txt'):
         q7 = msgbox.askquestion('파일 복원 확인', '해당 경로에 복원파일이 이미 존재합니다.\n파일을 덮어쓰시겠습니까?')
         if q7 == 'yes':
-            shutil.copyfile(exe_path+'/MainFolder/filepath.txt', backup_path)
-
+            shutil.copyfile(exe_path+'/MainFolder/filepath.txt', backup_path+'/filepath.txt')
+            shutil.copytree(exe_path+'/backup',backup_path)
+    else:
+        shutil.copyfile(exe_path+'/MainFolder/filepath.txt', backup_path+'/filepath.txt')
+        shutil.copytree(exe_path+'/backup',backup_path)
 
 menu = Menu(root)
 menu_update = Menu(menu, tearoff=0, relief='groove')
