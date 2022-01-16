@@ -16,8 +16,8 @@ CAL은 다음과 같은 기능을 갖고있습니다.
 
 Connect
 ===
-Sort | Link
-:---:|:---:
-오류 | [![GitHub issues by-label](https://img.shields.io/github/issues/CSense-O2/CAL/Error?color=brightgreen&logo=Github&style=plastic)](https://github.com/CSense-O2/CAL/labels/Error)
-건의 | [![GitHub issues by-label](https://img.shields.io/github/issues/CSense-O2/CAL/Suggestion?color=brightgreen&logo=Github&style=plastic)](https://github.com/CSense-O2/CAL/labels/Suggestion)
-질문 | [![GitHub issues by-label](https://img.shields.io/github/issues/CSense-O2/CAL/Question?color=brightgreen&logo=Github&style=plastic)](https://github.com/CSense-O2/CAL/labels/Question)
+Sort | Status | Link
+:---:|:---:|:---:
+오류 | ![GitHub issues by-label](https://img.shields.io/github/issues/CSense-O2/CAL/Error?color=brightgreen&logo=Github&style=flat-square)|[Link](https://github.com/CSense-O2/CAL/labels/Error)
+건의 | ![GitHub issues by-label](https://img.shields.io/github/issues/CSense-O2/CAL/Suggestion?color=brightgreen&logo=Github&style=flat-square)|[Link](https://github.com/CSense-O2/CAL/labels/Suggestion)
+질문 | ![GitHub issues by-label](https://img.shields.io/github/issues/CSense-O2/CAL/Question?color=brightgreen&logo=Github&style=flat-square)|[Link](https://github.com/CSense-O2/CAL/labels/Question)
