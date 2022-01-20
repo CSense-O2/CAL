@@ -13,7 +13,7 @@ from string import ascii_uppercase
 from bs4 import BeautifulSoup
 from requests import get
 
-현재버전 = 'v1.1.0'
+현재버전 = 'v1.1.1'
 
 real_path = os.getcwd()
 exe_path = real_path.replace('\\', '/')
@@ -25,7 +25,7 @@ for drive in list(ascii_uppercase):
                 '\\', '/')+'/LOSTARK/EFGame/Customizing'
             break
 
-url = 'https://github.com/CSense-O2/CAL/releases/latest'
+url = 'http://bit.do/CAL-releases-latest'
 
 response = get(url)
 
@@ -41,7 +41,7 @@ if response.status_code == 200:
 """+updatelog+'\n'
     except AttributeError:
         msgbox.showinfo('최신버전 확인 오류', '최신 버전 확인에 오류가 발생했습니다.\r홈페이지를 확인해주세요.')
-        webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
+        webbrowser.open('http://bit.do/CAL-homepage')
         sys.exit(0)
     if 최신버전 > 현재버전:
         q1 = msgbox.askquestion(
@@ -52,28 +52,30 @@ if response.status_code == 200:
             else:
                 os.mkdir(backup_path)
                 shutil.copytree(exe_path+'/backup',backup_path)
+        with open(exe_path+'/MainFolder/다시보지않기.txt','w',encoding='UTF-8') as f:
+            f.write('')        
         msgbox.showinfo('최신 버전 발견', '최신 버전 다운로드를 위해 링크가 열립니다.')
-        webbrowser.open('https://github.com/CSense-O2/CAL/')
+        webbrowser.open('http://bit.do/CAL-homepage')
         sys.exit(0)
     elif 최신버전 <= 현재버전:
         pass
     else:
         msgbox.showerror('버전 확인 오류', '관리자에게 "버전 확인 오류"라고 전달해주세요.')
-        webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
+        webbrowser.open('http://bit.do/CAL-homepage')
         sys.exit(0)
 elif response.status_code == 404:
     msgbox.showinfo('현재 점검중입니다.', '현재 점검중이니 관리자에게 문의해주세요.')
-    webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
+    webbrowser.open('http://bit.do/CAL-homepage')
     sys.exit(0)
 else:
     msgbox.showerror("파싱 오류", 'response : ' +
                      response.status_code+"\n해당 오류 코드를 관리자에게 전달해 주세요.")
-    webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
+    webbrowser.open('http://bit.do/CAL-homepage')
     sys.exit(0)
 
 if customizing_path == '':
     msgbox.showinfo('로스트아크 설치 탐색 오류', '관리자에게 "로스트아크 설치 탐색 오류" 라고 전달해주세요.')
-    webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
+    webbrowser.open('http://bit.do/CAL-homepage')
 
 root = Tk()
 root.title("커스터마이징 적용기")
@@ -108,7 +110,7 @@ def list_chunk(lst, n):
     return [lst[i:i+n] for i in range(0, len(lst), n)]
 
 def link_btn():
-    webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
+    webbrowser.open('http://bit.do/CAL-homepage')
 
 def update_log():
     msgbox.showinfo("업데이트 내용 확인", patchnote)
@@ -204,7 +206,7 @@ def save():
                 write_file_list = read_file.split('\n')[:30]+current_list
             else:
                 msgbox.showerror('직업 선택 오류', '관리자에게 "직업 선택 오류"라고 전달해주세요.')
-                webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
+                webbrowser.open('http://bit.do/CAL-homepage')
                 sys.exit(0)
             with open(exe_path+'/backup/filepath.txt', 'w', encoding='utf-8') as f:
                 f.write('\n'.join(write_file_list))
@@ -232,7 +234,7 @@ def find_file(num):
                 slot5_filepath.set(dir_name)
             else:
                 msgbox.showerror('슬롯 선택 오류', '관리자에게 "슬롯 선택 오류"라고 전달해주세요.')
-                webbrowser.open('https://github.com/CSense-O2/CAL/labels/Error')
+                webbrowser.open('http://bit.do/CAL-homepage')
 
 def restore_btn():
     if os.path.isdir(backup_path):
