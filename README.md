@@ -6,7 +6,7 @@ Download
 ===
 Platform | Link | Status | Version
 :---:|:---:|:---:|:---:
-Download from github | [CAL releases](https://github.com/CSense-O2/CAL/releases) | [![GitHub all releases](https://img.shields.io/github/downloads/CSense-O2/CAL/total?color=brightgreen&logo=github&style=flat-square)](https://github.com/CSense-O2/CAL/releases)| [![GitHub release (latest by date)](https://img.shields.io/github/v/release/CSense-O2/CAL?logo=github&style=social)](https://github.com/CSense-O2/CAL/releases)
+Download from github | [CAL releases](https://github.com/c-closed/CAL/releases) | [![GitHub all releases](https://img.shields.io/github/downloads/c-closed/CAL/total?color=brightgreen&logo=github&style=flat-square)](https://github.com/c-closed/CAL/releases)| [![GitHub release (latest by date)](https://img.shields.io/github/v/release/c-closed/CAL?logo=github&style=social)](https://github.com/c-closed/CAL/releases)
 
 Function
 ===
@@ -18,6 +18,6 @@ Connect
 ===
 Sort | Status | Link
 :---:|:---:|:---:
-오류 | [![GitHub issues by-label](https://img.shields.io/github/issues/CSense-O2/CAL/Error?color=brightgreen&logo=Github&style=flat-square)](https://github.com/CSense-O2/CAL/labels/Error)|[Link](https://github.com/CSense-O2/CAL/labels/Error)
-건의 | [![GitHub issues by-label](https://img.shields.io/github/issues/CSense-O2/CAL/Suggestion?color=brightgreen&logo=Github&style=flat-square)](https://github.com/CSense-O2/CAL/labels/Suggestion)|[Link](https://github.com/CSense-O2/CAL/labels/Suggestion)
-질문 | [![GitHub issues by-label](https://img.shields.io/github/issues/CSense-O2/CAL/Question?color=brightgreen&logo=Github&style=flat-square)](https://github.com/CSense-O2/CAL/labels/Question)|[Link](https://github.com/CSense-O2/CAL/labels/Question)
+오류 | [![GitHub issues by-label](https://img.shields.io/github/issues/c-closed/CAL/Error?color=brightgreen&logo=Github&style=flat-square)](https://github.com/c-closed/CAL/labels/Error)|[Link](https://github.com/c-closed/CAL/labels/Error)
+건의 | [![GitHub issues by-label](https://img.shields.io/github/issues/c-closed/CAL/Suggestion?color=brightgreen&logo=Github&style=flat-square)](https://github.com/c-closed/CAL/labels/Suggestion)|[Link](https://github.com/c-closed/CAL/labels/Suggestion)
+질문 | [![GitHub issues by-label](https://img.shields.io/github/issues/CSense-O2/CAL/Question?color=brightgreen&logo=Github&style=flat-square)](https://github.com/c-closed/CAL/labels/Question)|[Link](https://github.com/c-closed/CAL/labels/Question)
